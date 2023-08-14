@@ -1,14 +1,16 @@
-const connectToMongo=require('./db');
-const express=require('express');
+const connectToMongo = require("./db");
+const express = require("express");
 
 connectToMongo();
 const app = express();
-const port=3000;
+const port = 5000;
 
-app.get('/',(req,res)=>{
-    res.send("Hello World Aom")
-})
+app.use(express.json()); //for accessing local.body
 
-app.listen(port,()=>{
-    console.log(`listening at port ${port}`);
-})
+//Available routes:-
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/notes", require("./routes/notes"));
+
+app.listen(port, () => {
+  console.log(`listening at port ${port}`);
+});
