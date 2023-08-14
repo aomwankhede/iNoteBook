@@ -1,5 +1,6 @@
 const express=require('express')
 const User=require('../models/User')
+const {body,validationResult}=require('express-validator');
 const router=express.Router();
 
 //create a user using :POST '/api/auth' .Doesnt erequire auth
