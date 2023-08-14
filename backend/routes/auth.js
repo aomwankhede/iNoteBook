@@ -2,7 +2,10 @@ const express = require("express");
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const router = express.Router();
+const bcrypt=require('bcryptjs')
+const jwt=require('jsonwebtoken')
 
+const JWT_SECRET='ThisIsVerySecret';
 //create a user using :POST '/api/auth/createUser' .Doesnt require Login
 
 // If we send the data using get we may find our data on the log file
@@ -28,15 +31,23 @@ router.post(
           .status(400)
           .json({ error: `This email have already a account ${user.name}` });
       }
+      const salt= await bcrypt.genSalt(10);
+      const secPass=await bcrypt.hash(req.body.password,10);
       user = await User.create({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        password: secPass,
       });
-      res.json({ message: user });
-    } catch {
-        //use logger sqs
-      res.json({ message: "unknown error" });
+      const data={
+        id:user.id
+      }
+      const authToken=jwt.sign(data,JWT_SECRET);
+      console.log(authToken);
+      res.json({ authToken });
+    } catch(err) {
+      //use logger sqs
+      console.log(err)
+      res.json({ message: err.message });
     }
   }
 );
