@@ -1,13 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useEffect} from "react";
+import { Link ,useLocation} from "react-router-dom";
 
 const Navbar = () => {
+  let location = useLocation();
+  useEffect(()=>{
+    console.log(`You are in page with path ${location.pathname}`)
+  },[location])
   return (
     <>
-      <nav style={{borderRadius:'2px',backgroundColor:'#0f1218'}}className="navbar navbar-expand-lg">
+      <nav
+        style={{ borderRadius: "2px", backgroundColor: "#0f1218" }}
+        className="navbar navbar-expand-lg"
+      >
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/" style={{color:'white'}} >
-            iNote
+          <Link className="navbar-brand" to="/" style={{ color: "white" }}>
+            iNoteBook
           </Link>
           <button
             className="navbar-toggler"
@@ -23,12 +30,21 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/" style={{color:'white'}}>
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/"
+                  style={{ color: "white" }}
+                >
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about" style={{color:'white'}}>
+                <Link
+                  className="nav-link"
+                  to="/about"
+                  style={{ color: "white" }}
+                >
                   About
                 </Link>
               </li>
