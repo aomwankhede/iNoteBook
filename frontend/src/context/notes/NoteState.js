@@ -7,7 +7,8 @@ const NoteState = (props) => {
       _id: "64dfd4157684b8d5aa013f42",
       user: "64dfbc16187d529201b31132",
       title: "Title1",
-      description: "Good morn \\AS Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit deserunt iure quibusdam odit, omnis non voluptas necessitatibus id debitis saepe, nam assumenda voluptate repellat tempora fuga repellendus ab velit nesciunt!",
+      description:
+        "Good morn \\AS Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit deserunt iure quibusdam odit, omnis non voluptas necessitatibus id debitis saepe, nam assumenda voluptate repellat tempora fuga repellendus ab velit nesciunt!",
       tag: "personal",
       date: "2023-08-18T20:27:01.737Z",
       __v: 0,
@@ -16,7 +17,8 @@ const NoteState = (props) => {
       _id: "64dfd4157684b8d5aa013f42",
       user: "64dfbc16187d529201b31132",
       title: "Title1",
-      description: "Good morn \\AS Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit deserunt iure quibusdam odit, omnis non voluptas necessitatibus id debitis saepe, nam assumenda voluptate repellat tempora fuga repellendus ab velit nesciunt!",
+      description:
+        "Good morn \\AS Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit deserunt iure quibusdam odit, omnis non voluptas necessitatibus id debitis saepe, nam assumenda voluptate repellat tempora fuga repellendus ab velit nesciunt!",
       tag: "personal",
       date: "2023-08-18T20:27:01.737Z",
       __v: 0,
@@ -131,8 +133,35 @@ const NoteState = (props) => {
     },
   ];
   const [notes, setNotes] = useState(notesInitial);
+
+  //Add a note
+
+  const addNote = (title, description, tag) => {
+    //To do api call
+    const note = {
+      _id: "64dfd41a7684bd5aa013f5a",
+      user: "64dfbc16187d529201b31132",
+      title: title,
+      description: description,
+      tag: tag,
+      date: "2023-08-18T20:27:06.393Z",
+      __v: 0,
+    };
+    setNotes(notes.concat(note));
+    // setNotes(notes.push(note)); will not do
+  };
+
+  //Update a note
+
+  const updateNote = () => {};
+
+  //Delete a note
+
+  const deleteNote = () => {};
   return (
-    <NoteContext.Provider value={{ notes,setNotes }}>
+    <NoteContext.Provider
+      value={{ notes, setNotes, addNote, deleteNote, updateNote }}
+    >
       {props.children}
     </NoteContext.Provider>
   );

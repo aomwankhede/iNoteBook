@@ -12,7 +12,7 @@ function NoteItem(props) {
             {props.note.date}
           </p>
             <i className="fa-solid fa-trash fa-lg"></i>
-            <i class="fa-solid fa-pen-to-square fa-lg" style={{position:'relative',float:'right'}}></i>
+            <i className="fa-solid fa-pen-to-square fa-lg" style={{position:'relative',float:'right'}}></i>
         </div>
       </div>
     </>
