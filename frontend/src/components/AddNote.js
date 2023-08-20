@@ -3,9 +3,9 @@ import NoteContext from "../context/notes/NoteContext";
 
 function AddNote() {
   const context = useContext(NoteContext);
-  const { addNote, notes, setNotes } = context;
+  const { addNote} = context;
 
-  const [note, setNote] = useState({ title: "", description: "", tag: "" });
+  const [note, setNote] = useState({  title: "", description: "", tag: "" });
   const handleClick = (e) => {
     e.preventDefault();
     addNote(note.title,note.description,note.tag);
@@ -61,7 +61,7 @@ function AddNote() {
                 className="btn btn-primary my-1"
                 onClick={handleClick}
               >
-                Submit
+                Add Note
               </button>
             </div>
           </form>

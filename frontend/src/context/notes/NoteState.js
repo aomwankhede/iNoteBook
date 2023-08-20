@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
+  const host = "http://localhost:5000";
   const notesInitial = [
     {
       _id: "64dfd4157684b8d5aa013f42",
@@ -136,8 +137,18 @@ const NoteState = (props) => {
 
   //Add a note
 
-  const addNote = (title, description, tag) => {
+  const addNote = async (title, description, tag) => {
     //To do api call
+    const url = `${host}/api/notes/add`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmJjMTYxODdkNTI5MjAxYjMxMTMyIn0sImlhdCI6MTY5MjM4NjUyMX0.7ghx1anrl5T5MjokquLn3DG2Xtt1jjXLzmJBVd57UzU",
+      },
+      body: JSON.stringify({title,description,tag}),
+    });
     const note = {
       _id: "64dfd41a7684bd5aa013f5a",
       user: "64dfbc16187d529201b31132",
@@ -152,12 +163,40 @@ const NoteState = (props) => {
   };
 
   //Update a note
+  
+  const updateNote = async (note) => {
+    const { _id, title, description, tags } = note;
+    const url = `${host}/api/notes/update/${note._id}`;
+    
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmJjMTYxODdkNTI5MjAxYjMxMTMyIn0sImlhdCI6MTY5MjM4NjUyMX0.7ghx1anrl5T5MjokquLn3DG2Xtt1jjXLzmJBVd57UzU",
+      },
+      body: JSON.stringify({title,description,tags}),
+    });
+    const json = response.json();
 
-  const updateNote = () => {};
+    for (let index = 0; index < notes.length; index++) {
+      const element = notes[index];
+      if (element._id === _id) {
+        element.title = 'MachuPichu';
+        element.description ='Best place to live lively' ;
+        element.tag = '#machu';
+      }
+    }
+  };
 
   //Delete a note
 
-  const deleteNote = () => {};
+  const deleteNote = (id) => {
+    console.log(`Deleting the node with value ${id}`);
+    const DeletedNotes = notes.filter((not) => id !== not._id);
+    setNotes(DeletedNotes);
+  };
+
   return (
     <NoteContext.Provider
       value={{ notes, setNotes, addNote, deleteNote, updateNote }}

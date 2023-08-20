@@ -15,7 +15,7 @@ export default function Notes() {
         }}
       >
         <h2 style={{ textAlign: "center" }}>You Notes</h2>
-        {console.log(notes)}
+        {/* {console.log(notes)} */}
         {notes.map((note) => {
           return <NoteItem note={note} />;
         })}
