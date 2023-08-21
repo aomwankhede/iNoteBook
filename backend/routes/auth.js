@@ -20,9 +20,10 @@ router.post(
     body("password", "Enter a valid password").isLength({ min: 5 }),
   ],
   async (req, res) => {
+    let success=false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() });
     }
 
     //check whether the user with the same email exists in the database
@@ -31,7 +32,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ error: `This email have already a account ${user.name}` });
+          .json({ success,error: `This email have already a account ${user.name}` });
       }
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, 10);
@@ -45,12 +46,13 @@ router.post(
       };
       const authToken = jwt.sign(data, JWT_SECRET);
       console.log(authToken);
-      res.json({ authToken });
+      success=true;
+      res.json({success,  authToken });
     } catch (err) {
       //use logger sqs
       console.log(err);
-      res.json({ message: err.message });
-    }
+      res.json({ success,message: err.message });
+    } 
   }
 );
 
