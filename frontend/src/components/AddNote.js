@@ -3,13 +3,13 @@ import NoteContext from "../context/notes/NoteContext";
 
 function AddNote() {
   const context = useContext(NoteContext);
-  const { addNote} = context;
+  const { addNote } = context;
 
-  const [note, setNote] = useState({  title: "", description: "", tag: "" });
+  const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const handleClick = (e) => {
     e.preventDefault();
-    addNote(note.title,note.description,note.tag);
-    };
+    addNote(note.title, note.description, note.tag);
+  };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };

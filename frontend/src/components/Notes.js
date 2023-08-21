@@ -3,19 +3,31 @@ import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
 export default function Notes() {
   const context = useContext(NoteContext);
-  const { notes, getAllNote } = context;
+  const { notes, getAllNote, EditNote } = context;
 
-  const [note, setNote] = useState({ etitle: "", edescription: "", etag: "" });
+  const [note, setNote] = useState({
+    id: "",
+    etitle: "",
+    edescription: "",
+    etag: "",
+  });
   const ref = useRef(null);
+  const refClose = useRef(null);
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({etitle:currentNote.title,edescription:currentNote.description,etag:currentNote.tag});
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
   };
   useEffect(() => {
     getAllNote();
   }, []);
   const handleClick = (e) => {
-    e.preventDefault();
+    EditNote(note);
+    refClose.current.click();
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -109,13 +121,18 @@ export default function Notes() {
             </div>
             <div className="modal-footer">
               <button
+                ref={refClose}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleClick}
+              >
                 Update Note
               </button>
             </div>
@@ -131,7 +148,6 @@ export default function Notes() {
         }}
       >
         <h2 style={{ textAlign: "center" }}>You Notes</h2>
-        {/* {console.log(notes)} */}
         {notes.map((note) => {
           return (
             <NoteItem key={note._id} note={note} updateNote={updateNote} />
