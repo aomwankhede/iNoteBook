@@ -55,6 +55,22 @@ function AddNote() {
                 onChange={onChange}
               />
             </div>
+            <div className="form-group my-3">
+              <label
+                htmlFor="tag"
+                style={{ fontWeight: "bold", fontFamily: "sans-serif" }}
+              >
+                Tags
+              </label>
+              <input
+                type="tag"
+                className="form-control"
+                id="password"
+                placeholder="Password"
+                name="tag"
+                onChange={onChange}
+              />
+            </div>
             <div style={{ textAlign: "center" }}>
               <button
                 type="submit"

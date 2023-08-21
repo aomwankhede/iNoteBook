@@ -3,137 +3,23 @@ import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
   const host = "http://localhost:5000";
-  const notesInitial = [
-    {
-      _id: "64dfd4157684b8d5aa013f42",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description:
-        "Good morn \\AS Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit deserunt iure quibusdam odit, omnis non voluptas necessitatibus id debitis saepe, nam assumenda voluptate repellat tempora fuga repellendus ab velit nesciunt!",
-      tag: "personal",
-      date: "2023-08-18T20:27:01.737Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4157684b8d5aa013f42",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description:
-        "Good morn \\AS Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit deserunt iure quibusdam odit, omnis non voluptas necessitatibus id debitis saepe, nam assumenda voluptate repellat tempora fuga repellendus ab velit nesciunt!",
-      tag: "personal",
-      date: "2023-08-18T20:27:01.737Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4167684b8d5aa013f44",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:02.656Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4177684b8d5aa013f46",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:03.329Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4177684b8d5aa013f48",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:03.963Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4187684b8d5aa013f4a",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:04.586Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4197684b8d5aa013f4c",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:05.014Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4197684b8d5aa013f4e",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:05.190Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4197684b8d5aa013f50",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:05.389Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4197684b8d5aa013f52",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:05.581Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4197684b8d5aa013f54",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:05.773Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd4197684b8d5aa013f56",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:05.973Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd41a7684b8d5aa013f58",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:06.174Z",
-      __v: 0,
-    },
-    {
-      _id: "64dfd41a7684b8d5aa013f5a",
-      user: "64dfbc16187d529201b31132",
-      title: "Title1",
-      description: "Good morn \\AS",
-      tag: "personal",
-      date: "2023-08-18T20:27:06.393Z",
-      __v: 0,
-    },
-  ];
+  const notesInitial = []
   const [notes, setNotes] = useState(notesInitial);
+  
+  const getAllNote = async()=>{
+    const url = `${host}/api/notes/fetchall`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmJjMTYxODdkNTI5MjAxYjMxMTMyIn0sImlhdCI6MTY5MjM4NjUyMX0.7ghx1anrl5T5MjokquLn3DG2Xtt1jjXLzmJBVd57UzU",
+      }
+    });
+    const json = await response.json();
+    console.log(json);
+    setNotes(json);
+  }
 
   //Add a note
 
@@ -191,15 +77,26 @@ const NoteState = (props) => {
 
   //Delete a note
 
-  const deleteNote = (id) => {
+  const deleteNote = async(id) => {
     console.log(`Deleting the node with value ${id}`);
+    const url = `${host}/api/notes/delete/${id}`;
+    
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmJjMTYxODdkNTI5MjAxYjMxMTMyIn0sImlhdCI6MTY5MjM4NjUyMX0.7ghx1anrl5T5MjokquLn3DG2Xtt1jjXLzmJBVd57UzU",
+      }
+    });
     const DeletedNotes = notes.filter((not) => id !== not._id);
     setNotes(DeletedNotes);
+    console.log(DeletedNotes)
   };
 
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, addNote, deleteNote, updateNote }}
+      value={{ notes, setNotes, addNote, deleteNote, updateNote,getAllNote }}
     >
       {props.children}
     </NoteContext.Provider>
