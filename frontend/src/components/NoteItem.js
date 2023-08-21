@@ -3,12 +3,12 @@ import NoteContext from "../context/notes/NoteContext";
 
 function NoteItem(props) {
   const context = useContext(NoteContext);
-  const { deleteNote,updateNote } = context;
+  const { deleteNote } = context;
   const handleDelete = () => {
     deleteNote(props.note._id);
   };
   const handleUpdate = () => {
-    updateNote(props.note);
+    props.updateNote(props.note);
   };
   return (
     <>

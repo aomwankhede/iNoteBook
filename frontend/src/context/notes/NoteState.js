@@ -51,28 +51,29 @@ const NoteState = (props) => {
   //Update a note
   
   const updateNote = async (note) => {
-    const { _id, title, description, tags } = note;
-    const url = `${host}/api/notes/update/${note._id}`;
+    console.log("Helllo world")
+    // const { _id, title, description, tags } = note;
+    // const url = `${host}/api/notes/update/${note._id}`;
     
-    const response = await fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmJjMTYxODdkNTI5MjAxYjMxMTMyIn0sImlhdCI6MTY5MjM4NjUyMX0.7ghx1anrl5T5MjokquLn3DG2Xtt1jjXLzmJBVd57UzU",
-      },
-      body: JSON.stringify({title,description,tags}),
-    });
-    const json = response.json();
+    // const response = await fetch(url, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "auth-token":
+    //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkZmJjMTYxODdkNTI5MjAxYjMxMTMyIn0sImlhdCI6MTY5MjM4NjUyMX0.7ghx1anrl5T5MjokquLn3DG2Xtt1jjXLzmJBVd57UzU",
+    //   },
+    //   body: JSON.stringify({title,description,tags}),
+    // });
+    // const json = response.json();
 
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
-      if (element._id === _id) {
-        element.title = 'MachuPichu';
-        element.description ='Best place to live lively' ;
-        element.tag = '#machu';
-      }
-    }
+    // for (let index = 0; index < notes.length; index++) {
+    //   const element = notes[index];
+    //   if (element._id === _id) {
+    //     element.title = 'MachuPichu';
+    //     element.description ='Best place to live lively' ;
+    //     element.tag = '#machu';
+    //   }
+    // }
   };
 
   //Delete a note
