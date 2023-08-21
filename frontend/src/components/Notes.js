@@ -148,6 +148,9 @@ export default function Notes() {
         }}
       >
         <h2 style={{ textAlign: "center" }}>You Notes</h2>
+        <div className="container">
+        {(note.length===0)&&'No notes to display'}
+        </div>
         {notes.map((note) => {
           return (
             <NoteItem key={note._id} note={note} updateNote={updateNote} />

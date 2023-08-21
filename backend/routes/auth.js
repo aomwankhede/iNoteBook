@@ -62,9 +62,10 @@ router.post(
     body("password", "Login with correct credentials").exists(),
   ],
   async (req, res) => {
+    let success=false
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({success, errors: errors.array() });
     }
     const { email, password } = req.body;
     try {
@@ -72,7 +73,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ error: "Pls try to login with correct credential" });
+          .json({ success,error: "Pls try to login with correct credential" });
       }
 
       const passwordCompare = await bcrypt.compare(password, user.password);
@@ -80,15 +81,16 @@ router.post(
       if (!passwordCompare) {
         return res
           .status(400)
-          .json({ error: "Pls try to login with correct credential" });
+          .json({ success,error: "Pls try to login with correct credential" });
       }
       const data = {
         user: {
           id: user.id,
         },
       };
+      success=true;
       const authToken = jwt.sign(data, JWT_SECRET);
-      return res.json({ authToken });
+      return res.json({ success,authToken });
     } catch (error) {
       console.log(error.message);
       return res.status(500).send("Internal Server Error");
