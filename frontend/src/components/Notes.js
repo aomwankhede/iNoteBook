@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from "./NoteItem";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 export default function Notes() {
-  const history=useNavigate();
+  const history = useNavigate();
   const context = useContext(NoteContext);
   const { notes, getAllNote, EditNote } = context;
 
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
       // getAllNote();
+    } else {
+      history("/login");
     }
-    else{
-      history('/login')
-    }
-  })
+  });
   const [note, setNote] = useState({
     id: "",
     etitle: "",
@@ -161,13 +160,17 @@ export default function Notes() {
         {/* <div className="container">
         {(notes.length===0)&&'No notes to display'}
         </div> */}
-        {(notes.length>0)?notes.map((note) => {
-          return (
-            <NoteItem key={note._id} note={note} updateNote={updateNote} />
-          );
-        }):<div className="container">
-        {(notes.length===0)&&'No notes to display'}
-        </div>}
+        {notes.length > 0 ? (
+          notes.map((note) => {
+            return (
+              <NoteItem key={note._id} note={note} updateNote={updateNote} />
+            );
+          })
+        ) : (
+          <div className="container">
+            {notes.length === 0 && "No notes to display"}
+          </div>
+        )}
       </div>
     </>
   );

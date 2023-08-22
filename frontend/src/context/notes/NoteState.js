@@ -34,6 +34,7 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
+    console.log(response)
     const note = {
       _id: "64dfd41a7684bd5aa013f5a",
       user: "64dfbc16187d529201b31132",
@@ -73,6 +74,7 @@ const NoteState = (props) => {
           : note
       )
     );
+    console.log(json)
   };
 
   //Delete a note
@@ -87,6 +89,7 @@ const NoteState = (props) => {
           localStorage.getItem('token'),
       },
     });
+    console.log(response);
     const DeletedNotes = notes.filter((not) => id !== not._id);
     setNotes(DeletedNotes);
   };

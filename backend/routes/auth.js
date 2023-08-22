@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const fetchuser = require('../middleware/fetchuser');
+const fetchuser = require("../middleware/fetchuser");
 
 const JWT_SECRET = "ThisIsVerySecret";
 //create a user using :POST '/api/auth/createUser' .Doesnt require Login
@@ -20,10 +20,10 @@ router.post(
     body("password", "Enter a valid password").isLength({ min: 5 }),
   ],
   async (req, res) => {
-    let success=false;
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({success, errors: errors.array() });
+      return res.status(400).json({ success, errors: errors.array() });
     }
 
     //check whether the user with the same email exists in the database
@@ -32,7 +32,10 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ success,error: `This email have already a account ${user.name}` });
+          .json({
+            success,
+            error: `This email have already a account ${user.name}`,
+          });
       }
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, 10);
@@ -46,13 +49,13 @@ router.post(
       };
       const authToken = jwt.sign(data, JWT_SECRET);
       console.log(authToken);
-      success=true;
-      res.json({success,  authToken });
+      success = true;
+      res.json({ success, authToken });
     } catch (err) {
       //use logger sqs
       console.log(err);
-      res.json({ success,message: err.message });
-    } 
+      res.json({ success, message: err.message });
+    }
   }
 );
 
@@ -64,10 +67,10 @@ router.post(
     body("password", "Login with correct credentials").exists(),
   ],
   async (req, res) => {
-    let success=false
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({success, errors: errors.array() });
+      return res.status(400).json({ success, errors: errors.array() });
     }
     const { email, password } = req.body;
     try {
@@ -75,7 +78,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ success,error: "Pls try to login with correct credential" });
+          .json({ success, error: "Pls try to login with correct credential" });
       }
 
       const passwordCompare = await bcrypt.compare(password, user.password);
@@ -83,16 +86,16 @@ router.post(
       if (!passwordCompare) {
         return res
           .status(400)
-          .json({ success,error: "Pls try to login with correct credential" });
+          .json({ success, error: "Pls try to login with correct credential" });
       }
       const data = {
         user: {
           id: user.id,
         },
       };
-      success=true;
+      success = true;
       const authToken = jwt.sign(data, JWT_SECRET);
-      return res.json({ success,authToken });
+      return res.json({ success, authToken });
     } catch (error) {
       console.log(error.message);
       return res.status(500).send("Internal Server Error");
@@ -101,11 +104,11 @@ router.post(
 );
 
 //Route 3:- gets login user details POST '/api/auth/getUser' -->requires authentication
-router.post("/getUser",fetchuser, async (req, res) => {
+router.post("/getUser", fetchuser, async (req, res) => {
   try {
     userId = req.user.id;
     const user = await User.findById(userId).select("-password");
-    res.send(user)
+    res.send(user);
   } catch (error) {
     console.log(error.message);
     return res.status(500).send("Internal Server Error");

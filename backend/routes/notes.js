@@ -78,7 +78,6 @@ router.put("/update/:id", fetchuser, async (req, res) => {
   }
 });
 
-
 // 3)delete notes
 router.delete("/delete/:id", fetchuser, async (req, res) => {
   try {
@@ -91,8 +90,8 @@ router.delete("/delete/:id", fetchuser, async (req, res) => {
       return res.status(401).send("Unauthorized!!");
     }
     //Find Note
-    note =await Notes.findByIdAndDelete(req.params.id);
-    res.json({message:'Successfully deleted!!'});
+    note = await Notes.findByIdAndDelete(req.params.id);
+    res.json({ message: "Successfully deleted!!" });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
