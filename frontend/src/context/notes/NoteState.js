@@ -21,6 +21,7 @@ const NoteState = (props) => {
     setNotes(json);
   };
 
+  const func=(note)=>{setNotes(note)}
   //Add a note
   const addNote = async (title, description, tag) => {
     //To do api call
@@ -35,16 +36,19 @@ const NoteState = (props) => {
       body: JSON.stringify({ title, description, tag }),
     });
     console.log(response)
-    const note = {
-      _id: "64dfd41a7684bd5aa013f5a",
-      user: "64dfbc16187d529201b31132",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2023-08-18T20:27:06.393Z",
-      __v: 0,
-    };
-    setNotes(notes.concat(note));
+    // const note = {
+    //   _id: "64dfd41a7684bd5aa013f5a",
+    //   user: "64dfbc16187d529201b31132",
+    //   title: title,
+    //   description: description,
+    //   tag: tag,
+    //   date: "2023-08-18T20:27:06.393Z",
+    //   __v: 0,
+    // };
+    const note = await response.json();
+    setNotes(notes.concat(note))
+    // {(notes.length===0)?func(note):setNotes(notes.concat(note));}
+    // setNotes(notes.concat(note));
     // setNotes(notes.push(note)); will not do
   };
 
